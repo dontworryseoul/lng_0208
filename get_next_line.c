@@ -56,11 +56,8 @@ char *set_prev_nl(char *backup)
     char *str;
     char *tmp;
     tmp = ft_strdup(backup);
-    //c1.
-    //tmp = ABCDEFG\nAB\0
+
     *(ft_strchr(tmp, '\n')) = '\0';
-    //c1.
-    //tmp = ABCDEFG\0
     return (tmp);
 }
 
@@ -83,12 +80,8 @@ int get_next_line(int fd, char **line)
         return (-1);
     if (find_return(fd, &backup[fd]) == -1)
         return (-1);
-
-    // while 필요한 함수
-    // 1. '\n' 전까지 별도 문장으로 만들어 주는 함수.
     if (!(*line = set_prev_nl(backup[fd])))
         return (-1);
-    // 2. '\n' 후부터 별도 문장으로 만들어 주는 함수.
     if (!(backup = set_after_nl(&backup[fd])))
         return (-1);
     return (1);//마지막행일때 0과같이 출력하는 예외처리를 어디서 해줄지 고민하기.
