@@ -24,7 +24,7 @@ int find_return(int fd, char **backup)
             return (-1);
         }
             buf[read_len] = '\0';
-            tmp = ft_strjoin(*backup, buf); //strjoin은 매개변수가 null일 경우도 동작
+            tmp = ft_strjoin(*backup, buf);
             only_free(*backup);
             *backup = tmp;
     }
@@ -33,12 +33,14 @@ int find_return(int fd, char **backup)
         return (0);
     return (1);
 }
+/*
+** 받아온 문장을 strlen 으로 전체 길이를 알아내고
+** 받아온 문장 '\n' 까지의 길이를 알아내고
+** malloc 문장 길이 - 개행까지 길이 + 1 
+** '\n' 개행 뒤 문장을 위에서 할당 받은 메모리에 할당 후 반환.
+*/
 char *set_after_nl(char **backup)
 {
-    // 받아온 문장을 strlen 으로 전체 길이를 알아내고
-    // 받아온 문장 '\n' 까지의 길이를 알아내고
-    // malloc 문장 길이 - 개행까지 길이 + 1 
-    // '\n' 개행 뒤 문장을 위에서 할당 받은 메모리에 할당 후 반환.
     char *tmp;
     tmp = ft_strdup(ft_strchr(*backup, '\n') + 1);
     //c1.loop2
