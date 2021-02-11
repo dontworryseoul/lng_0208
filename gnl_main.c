@@ -4,7 +4,24 @@
 
 int get_next_line(int fd, char **line)
 {
-    static char *
+    static char *backup[OPEN_MAX + 1];
+    char        *tmp;
+    char        *buf;
+    int         ret;
+    int         read_len;
+
+    if (fd < 0 && line == 0 && BUFFER_SIZE <= 0)
+        return (-1);
+    buf = malloc(sizeof(char) * (BUFFER_SIZE + 1)
+    if (!buf)
+        return (-1);
+    read_len = read(fd, buf, BUFFER_SIZE);
+    buf[read_len] = '\0';
+    if (read_len == 0)
+        return (0);
+    *line = ft_strjoin(backup, buf);
+    free(buf);
+    return (1);    
 }
 
 int main(void)
@@ -15,13 +32,9 @@ int main(void)
     int num;
 
     fd = open("text.txt", O_RDONLY);
-    num = read(fd, buf, BUFFER_SIZE);
-    buf[num] = '\0';
-    // get_next_line(fd, &line);
-    line = buf;
-    puts(buf);
-    printf("%d\n", OPEN_MAX);
-    // puts(line);
+    get_next_line(fd, &line);
+    puts(line);
+    free(line);
     close (fd);
     return (0);
 }
