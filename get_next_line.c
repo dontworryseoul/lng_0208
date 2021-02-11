@@ -13,26 +13,22 @@ int find_return(int fd, char **backup)
     char *tmp;
     char *buf;
 
+    read_len = 1;
 	if (!(buf = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (-1);
-    while (!(ft_strchr(*backup, '\n'))) // backup 앞에서 이미 \n이 없는걸 아는데 계속 처음부터 다시 검사하는게 비효율적임
+    while (!(ft_strchr(*backup, '\n')) && read_len != 0)
     {
         if ((read_len = read(fd, buf, BUFFER_SIZE)) == -1)
         {
             only_free(buf);
             return (-1);
         }
-        else if (read_len == 0)
-            break ;
-        else if (read_len == 1)
-        {
             buf[read_len] = '\0';
             tmp = ft_strjoin(*backup, buf); //strjoin은 매개변수가 null일 경우도 동작
             only_free(*backup);
             *backup = tmp;
-        }
     }
-    free(buf);
+    only_free(buf);
     if (read_len == 0)
         return (0);
     return (1);
