@@ -23,10 +23,10 @@ int find_return(int fd, char **backup)
             only_free(buf);
             return (-1);
         }
-            buf[read_len] = '\0';
-            tmp = ft_strjoin(*backup, buf);
-            only_free(*backup);
-            *backup = tmp;
+        buf[read_len] = '\0';
+        tmp = ft_strjoin(*backup, buf);
+        only_free(*backup);
+        *backup = tmp;
     }
     only_free(buf);
     if (read_len == 0)
@@ -55,37 +55,27 @@ char *set_prev_nl(char *backup)
 {
     char *str;
     char *tmp;
-    tmp = ft_strdup(backup);
 
+    if (!(tmp = ft_strdup(backup)))
+        return (0);
+    only_free(backup);
     *(ft_strchr(tmp, '\n')) = '\0';
     return (tmp);
 }
-
-    //case 1
-    //ABCDEFG\n BUFFER_SIZE = 5
-    //ABC
-
-    //case 2
-    //ABCDEFG\n BUFFER_SIZE = 10
-    //ABC
-
-    //case 3
-    //
 
 int get_next_line(int fd, char **line)
 {
     static char *backup[OPEN_MAX + 1];
     char *tmp;
+    int ret ;
+
     if (fd < 0 && line == 0 && BUFFER_SIZE <= 0)
         return (-1);
-    if (find_return(fd, &backup[fd]) == -1)
+    if ((ret == find_return(fd, &backup[fd])) == -1)
         return (-1);
-    if (!(*line = set_prev_nl(backup[fd])))
-        return (-1);
-    if (!(backup = set_after_nl(&backup[fd])))
-        return (-1);
+    else if (ret == 0)
+        return (0);
+    *line = set_prev_nl(backup[fd])
+    backup = set_after_nl(&backup[fd]
     return (1);//마지막행일때 0과같이 출력하는 예외처리를 어디서 해줄지 고민하기.
 }
-    //case1 res1 
-    //line -> ABCDEFG\0
-    //backup ->AB\0
