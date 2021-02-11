@@ -1,5 +1,12 @@
 #include "get_next_line.h"
 
+void only_free(char *buf)
+{
+    if (buf)
+        free(buf);
+    buf = 0;
+}
+
 int find_return(int fd, char **backup)
 {
     int read_len;
@@ -8,47 +15,27 @@ int find_return(int fd, char **backup)
 
 	if (!(buf = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (-1);
-        // backup  맨앞서부터 검사하는가?
-        // backup 앞에서 이미 \n이 없는걸 아는데 계속 처음부터 다시 검사하는게 비효율적임
-    while (!(ft_strchr(*backup, '\n')))
+    while (!(ft_strchr(*backup, '\n'))) // backup 앞에서 이미 \n이 없는걸 아는데 계속 처음부터 다시 검사하는게 비효율적임
     {
         if ((read_len = read(fd, buf, BUFFER_SIZE)) == -1)
         {
-            free(buf);
-            buf = 0;
+            only_free(buf);
             return (-1);
         }
-        //c1.1-loop1
-        //buf = ABCDE
-        //c1.1-loop2
-        //buf = FG\nAB
-        else if(read_len == 0)
+        else if (read_len == 0)
             break ;
-        buf[read_len] = '\0';
-            //c1.loop1
-            //buf = ABCDE\0
-            //c1.loop2
-            //buf = FG\nAB\0
-
-        tmp = ft_strjoin(*backup, buf);//strjoin은 매개변수가 null일 경우도 동작
-            //c1.loop1
-            //tmp = ABCDE\0
-            //c1.loop2
-            //tmp = ABCDEFG\nAB\0
-        if (*backup)
-            free(*backup);
-        *backup = tmp;
-            //c1.loop1
-            //*backup = ABCDE\0
-            //c1.loop2
-            //*backup = ABCDEFG\nAB\0
+        else if (read_len == 1)
+        {
+            buf[read_len] = '\0';
+            tmp = ft_strjoin(*backup, buf); //strjoin은 매개변수가 null일 경우도 동작
+            only_free(*backup);
+            *backup = tmp;
+        }
     }
     free(buf);
+    if (read_len == 0)
+        return (0);
     return (1);
-    //while문에 나온 값은 '\n'을 포함한 문장. 
-    //개행문자가 있거나 혹은 eof에 도달한 경우
-    //
-    //return ();
 }
 char *set_after_nl(char **backup)
 {
