@@ -71,11 +71,11 @@ int get_next_line(int fd, char **line)
 
     if (fd < 0 && line == 0 && BUFFER_SIZE <= 0)
         return (-1);
-    if ((ret == find_return(fd, &backup[fd])) == -1)
+    if ((ret = find_return(fd, &backup[fd])) == -1)
         return (-1);
     else if (ret == 0)
         return (0);
-    *line = set_prev_nl(backup[fd])
-    backup = set_after_nl(&backup[fd]
+    *line = set_prev_nl(backup[fd]);
+    backup[fd] = set_after_nl(&backup[fd]);
     return (1);//마지막행일때 0과같이 출력하는 예외처리를 어디서 해줄지 고민하기.
 }
