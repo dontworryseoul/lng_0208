@@ -43,18 +43,18 @@ char *set_after_nl(char **backup)
 {
     char *tmp;
     tmp = ft_strdup(ft_strchr(*backup, '\n') + 1);
-    //c1.loop2
-    //tmp = AB\0
     free(*backup);
     return (tmp);
 }
+/*
+** 받아온 문장에 '\n' 까지 읽고, 그 길이 +1만큼 malloc으로 메모리 공간 할당
+** 할당한 영역에 문장 처음부터 '\n'까지 넣기.
+** 만들어진 문장을 반환하기.
+*/
 char *set_prev_nl(char *backup)
 {
     char *str;
     char *tmp;
-    // 받아온 문장에 '\n' 까지 읽고, 그 길이 +1만큼 malloc으로 메모리 공간 할당
-    // 할당한 영역에 문장 처음부터 '\n'까지 넣기.
-    // 만들어진 문장을 반환하기.
     tmp = ft_strdup(backup);
     //c1.
     //tmp = ABCDEFG\nAB\0
