@@ -33,12 +33,7 @@ int find_return(int fd, char **backup)
         return (0);
     return (1);
 }
-/*
-** 받아온 문장을 strlen 으로 전체 길이를 알아내고
-** 받아온 문장 '\n' 까지의 길이를 알아내고
-** malloc 문장 길이 - 개행까지 길이 + 1 
-** '\n' 개행 뒤 문장을 위에서 할당 받은 메모리에 할당 후 반환.
-*/
+
 char *set_after_nl(char **backup)
 {
     char *tmp;
@@ -46,11 +41,7 @@ char *set_after_nl(char **backup)
     free(*backup);
     return (tmp);
 }
-/*
-** 받아온 문장에 '\n' 까지 읽고, 그 길이 +1만큼 malloc으로 메모리 공간 할당
-** 할당한 영역에 문장 처음부터 '\n'까지 넣기.
-** 만들어진 문장을 반환하기.
-*/
+
 char *set_prev_nl(char *backup)
 {
     char *str;
