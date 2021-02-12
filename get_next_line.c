@@ -118,7 +118,7 @@ int get_next_line(int fd, char **line)
     static char *backup;
     int flagcheck;
 
-    if (fd < 0 && line == 0 && BUFFER_SIZE <= 0)
+    if (fd < 0 || line == 0 || BUFFER_SIZE <= 0)
         return (-1);
     if ((flagcheck = find_return(fd, &backup)) == -1)
         return (-1);

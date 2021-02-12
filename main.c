@@ -16,7 +16,7 @@ int main()
     free(line);
   }
   puts(line);
-  //printf("%d\n", res);
+  printf("%d\n", res);
   write(fd2, line, ft_strlen(line));
   free(line);
   close(fd);
