@@ -16,7 +16,7 @@ int find_return(int fd, char **backup)
     read_len = 1;
 	if (!(buf = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (-1);
-    while (!(ft_strchr(*backup, '\n')) && read_len != 0)
+    while (!(ft_strchr(*backup, '\n')) && read_len) // \n 주소값 별도 변수에 담기
     {
         if ((read_len = read(fd, buf, BUFFER_SIZE)) == -1)
         {
@@ -44,13 +44,13 @@ char *set_after_nl(char **backup)
 
 char *set_prev_nl(char *backup)
 {
-    char *str;
+    char *ptr_n;
     char *tmp;
 
     if (!(tmp = ft_strdup(backup)))
         return (0);
-    only_free(backup);
-    *(ft_strchr(tmp, '\n')) = '\0';
+    if (ptr_n = (ft_strchr(tmp, '\n')))  // 수정해보기.
+        *(ft_strchr(tmp, '\n')) = '\0';
     return (tmp);
 }
 
@@ -60,7 +60,7 @@ int get_next_line(int fd, char **line)
     char *tmp;
     int ret ;
 
-    if (fd < 0 && line == 0 && BUFFER_SIZE <= 0)
+    if (fd < 0 || line == 0 || BUFFER_SIZE <= 0)
         return (-1);
     if ((ret = find_return(fd, &backup[fd])) == -1)
         return (-1);
@@ -68,5 +68,4 @@ int get_next_line(int fd, char **line)
         return (0);
     *line = set_prev_nl(backup[fd]);
     backup[fd] = set_after_nl(&backup[fd]);
-    return (1);//마지막행일때 0과같이 출력하는 예외처리를 어디서 해줄지 고민하기.
-}
+    return (1);
