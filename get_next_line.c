@@ -59,14 +59,19 @@ int find_return(int fd, char **backup)
     //return ();
 }
 
-char *set_after_nl(char **backup)
+char *set_after_nl(char **backup, int *flagcheck)
 {
     // 받아온 문장을 strlen 으로 전체 길이를 알아내고
     // 받아온 문장 '\n' 까지의 길이를 알아내고
     // malloc 문장 길이 - 개행까지 길이 + 1 
     // '\n' 개행 뒤 문장을 위에서 할당 받은 메모리에 할당 후 반환.
     char *tmp;
-    tmp = ft_strdup(ft_strchr(*backup, '\n') + 1);
+
+    tmp = 0;
+    if (ft_strchr(*backup, '\n'))
+        tmp = ft_strdup(ft_strchr(*backup, '\n') + 1);
+    else
+        *flagcheck = 0;
     //c1.loop1
     //tmp = AB\0
     free(*backup);
@@ -75,9 +80,7 @@ char *set_after_nl(char **backup)
 
 char *set_prev_nl(char *backup)
 {
-    char *str;
     char *tmp;
-    //char *chrtmp;
     // 받아온 문장에 '\n' 까지 읽고, 그 길이 +1만큼 malloc으로 메모리 공간 할당
     // 할당한 영역에 문장 처음부터 '\n'까지 넣기.
     // 만들어진 문장을 반환하기.
@@ -86,11 +89,11 @@ char *set_prev_nl(char *backup)
     //tmp = ABCDEFG\nAB\0
     //c1.loop2
     //tmp = ABC\0
-    *(ft_strchr(tmp, '\n')) = '\0'; //ERR:strchr이 NULL포인터일때 문제가생김...
-    /*
-    if((chrtmp = *(ft_strchr(tmp, '\n'))))
-        *chrtmp = '\0';
-    */
+    //*(ft_strchr(tmp, '\n')) = '\0'; //ERR:strchr이 NULL포인터일때 문제가생김...
+    
+    if((ft_strchr(tmp, '\n')))
+        *(ft_strchr(tmp, '\n')) = '\0';
+    
     //c1.loop1
     //tmp = ABCDEFG\0
     //c1.loop2
@@ -109,11 +112,10 @@ char *set_prev_nl(char *backup)
 //case 3 -->ERR LINE88
 //ABCDEFG\n BUFFER_SIZE = 8
 //ABC
-
+#include <stdio.h>
 int get_next_line(int fd, char **line)
 {
     static char *backup;
-    char *tmp;
     int flagcheck;
 
     if (fd < 0 && line == 0 && BUFFER_SIZE <= 0)
@@ -126,11 +128,11 @@ int get_next_line(int fd, char **line)
 // while 필요한 함수
 // 1. '\n' 전까지 별도 문장으로 만들어 주는 함수.
     if (!(*line = set_prev_nl(backup)))
-        return (-1);
+        return (0);
 
-    if (!(backup = set_after_nl(&backup)))
-        return (-1);
-    return (1);//마지막행일때 0과같이 출력하는 예외처리를 어디서 해줄지 고민하기.
+    if (!(backup = set_after_nl(&backup, &flagcheck)))
+        return (0);
+    return (flagcheck);//마지막행일때 0과같이 출력하는 예외처리를 어디서 해줄지 고민하기.
 }
 //case1 res1
 //line -> ABCDEFG\0
