@@ -5,13 +5,13 @@ size_t	ft_strlen(const char *src)
 	size_t count;
 
 	count = 0;
-    if (src)
-    {
-        while (*src++ != '\0')
-        {
-            count++;
-        }
-    }
+	if (src)
+	{
+		while (*src++ != '\0')
+		{
+			count++;
+		}
+	}
 	return (count);
 }
 
@@ -19,15 +19,15 @@ char	*ft_strchr(const char *s, int c)
 {
 	size_t	len;
 
-    if (s)
-    {
-        len = ft_strlen(s) + 1;
-        while (len--)
-        {
-            if (*s++ == (char)c)
-                return ((char *)--s);
-        }
-    }
+	if (s)
+	{
+		len = ft_strlen(s) + 1;
+		while (len--)
+		{
+			if (*s++ == (char)c)
+				return ((char *)--s);
+		}
+	}
 	return (NULL);
 }
 
@@ -73,14 +73,13 @@ char	*ft_strdup(const char *s1)
 	const char	*ps1;
 	size_t		len;
 
-	if (!s1)	
+	if (!s1)
 	{
 		if (!(rest = (char *)malloc((1) * sizeof(char))))
 			return (NULL);
 		rest[0] = '\0';
 		return (rest);
 	}
-	
 	ps1 = s1;
 	len = ft_strlen(s1);
 	if (!(rest = (char *)malloc((len + 1) * sizeof(char))))
