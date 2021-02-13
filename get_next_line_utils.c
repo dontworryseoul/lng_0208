@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jso <jso@student.42seoul.kr>               +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/13 22:45:41 by jso               #+#    #+#             */
+/*   Updated: 2021/02/13 23:29:45 by jso              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 size_t	ft_strlen(const char *src)
@@ -8,9 +20,7 @@ size_t	ft_strlen(const char *src)
 	if (src)
 	{
 		while (*src++ != '\0')
-		{
 			count++;
-		}
 	}
 	return (count);
 }
@@ -24,7 +34,7 @@ char	*ft_strchr(const char *s, int c)
 		len = ft_strlen(s) + 1;
 		while (len--)
 		{
-			if (*s++ == (char)c)
+			if (*s++ == (unsigned char)c)
 				return ((char *)--s);
 		}
 	}
@@ -70,7 +80,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 char	*ft_strdup(const char *s1)
 {
 	char		*rest;
-	const char	*ps1;
 	size_t		len;
 
 	if (!s1)
@@ -80,14 +89,10 @@ char	*ft_strdup(const char *s1)
 		rest[0] = '\0';
 		return (rest);
 	}
-	ps1 = s1;
 	len = ft_strlen(s1);
 	if (!(rest = (char *)malloc((len + 1) * sizeof(char))))
 		return (NULL);
-	while (len--)
-	{
-		*rest++ = *ps1++;
-	}
-	*rest = '\0';
-	return (rest - ft_strlen(s1));
+	ft_memcpy(rest, s1, len);
+	*(rest + len) = '\0';
+	return (rest);
 }
