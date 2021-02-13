@@ -1,4 +1,4 @@
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int find_return(int fd, char **backup)
 {
@@ -18,7 +18,7 @@ int find_return(int fd, char **backup)
         }
         else if(read_len == 0)
             break ;
-        *(buf + read_len) = '\0';
+        buf[read_len] = '\0';
         tmp = ft_strjoin(*backup, buf);
         if (*backup)
             free(*backup);
@@ -58,10 +58,12 @@ int get_next_line(int fd, char **line)
     static char *backup[OPEN_MAX];
     int flagcheck;
 
-    if (fd < 0 || line == 0 || BUFFER_SIZE <= 0 || fd > OPEN_MAX)
+    if (fd < 0 || line == 0 || BUFFER_SIZE <= 0)
         return (-1);
     if ((flagcheck = find_return(fd, &backup[fd])) == -1)
         return (-1);
+    if (!flagcheck)
+        return (0);
     if (!(*line = set_prev_nl(backup[fd])))
         return (0);
     if (!(backup[fd] = set_after_nl(&backup[fd], &flagcheck)))

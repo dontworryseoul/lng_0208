@@ -2,7 +2,7 @@
 
 int main()
 {
-  int fd = open("text.txt", O_RDONLY);
+  int fd = open("alternate_line_nl_with_nl", O_RDONLY);
   int fd2 = open("text6.txt",O_RDWR|O_CREAT|O_APPEND|O_EXCL,0777);
   char *line;
   int res;
