@@ -52,20 +52,21 @@ char *set_prev_nl(char *backup)
 }
 
 #include <stdio.h>
+#include <limits.h>
 int get_next_line(int fd, char **line)
 {
-    static char *backup;
+    static char *backup[OPEN_MAX];
     int flagcheck;
 
     if (fd < 0 || line == 0 || BUFFER_SIZE <= 0)
         return (-1);
-    if ((flagcheck = find_return(fd, &backup)) == -1)
+    if ((flagcheck = find_return(fd, &backup[fd])) == -1)
         return (-1);
     if (!flagcheck)
         return (0);
-    if (!(*line = set_prev_nl(backup)))
+    if (!(*line = set_prev_nl(backup[fd])))
         return (0);
-    if (!(backup = set_after_nl(&backup, &flagcheck)))
+    if (!(backup[fd] = set_after_nl(&backup[fd], &flagcheck)))
         return (0);
     return (flagcheck);
 }
