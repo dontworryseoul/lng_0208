@@ -6,13 +6,13 @@
 /*   By: jso <jso@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 22:45:17 by jso               #+#    #+#             */
-/*   Updated: 2021/02/13 23:16:52 by jso              ###   ########.fr       */
+/*   Updated: 2021/02/14 13:26:39 by jso              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int		find_return(int fd, char **backup, char **cur)
+static int	find_return(int fd, char **backup, char **cur)
 {
 	int		read_len;
 	char	*tmp;
@@ -41,7 +41,7 @@ int		find_return(int fd, char **backup, char **cur)
 	return (1);
 }
 
-char	*set_after_nl(char **backup, int *flagcheck, char **cur)
+static char	*set_after_nl(char **backup, int *flagcheck, char **cur)
 {
 	char *tmp;
 
@@ -54,7 +54,7 @@ char	*set_after_nl(char **backup, int *flagcheck, char **cur)
 	return (tmp);
 }
 
-char	*set_prev_nl(char **backup, char **cur)
+static char	*set_prev_nl(char **backup, char **cur)
 {
 	char			*tmp;
 	unsigned int	pos_nl;
@@ -68,7 +68,7 @@ char	*set_prev_nl(char **backup, char **cur)
 	return (tmp);
 }
 
-int		get_next_line(int fd, char **line)
+int			get_next_line(int fd, char **line)
 {
 	static char	*backup[OPEN_MAX];
 	int			flagcheck;
