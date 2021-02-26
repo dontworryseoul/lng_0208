@@ -1,0 +1,2 @@
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC44c5LauOt05Qwj04/z62QhowkAQa/tAZZFl66AX69NJbUTbjNsdeHMHS8DAI03Lnu4hG1lDGLX41IBIzPTfqqMp0rfnsxix5aTNlYr0T9CVKgCDdlmmlTHFc+dcQ3R8euzmXSDLvlKnawySGYMBKFMYFG7I8SXVXoovtK3oCQvzQaR//UNQN+Z3V59TNRTGJiy6D7ry7PuXKsZs4wjGgvFqWjhGhZrE/EPsihRmy6C2RudRr0IkUHLeW5kpYV+BObTg7H/Nsk1g5qg8gcijKB1n5ySDQZQjmHvg0/vAP6bJp77LzzQkZxENXiWK7yVaLXT1/Mc5Lx+nnzkMXjlH1l gilee@c6r9s7.42seoul.kr" > /Users/gilee/.ssh/id_rsa.pub \n
+kinit \n
